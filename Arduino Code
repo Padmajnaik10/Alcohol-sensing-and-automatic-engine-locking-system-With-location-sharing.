@@ -1,0 +1,32 @@
+#define sensor_pin 7
+#define Buzzer 9
+#define LED 13
+int motor=4;
+int sensor_value; 
+void setup() {
+ Serial.begin(115200); 
+ pinMode(motor,OUTPUT);
+ Serial.println("MQ3 warming up!");
+ delay(120000); 
+}
+void loop() {
+ sensor_value = digitalRead(sensor_pin);
+ Serial.print("Digital Output: ");
+ Serial.print(sensor_value);
+ 
+ if (sensor_value) {
+ Serial.println(" | Alcohol: Not Detected");
+ digitalWrite(LED, LOW);
+ digitalWrite(motor,0);
+ noTone(Buzzer);
+ 
+ } else {
+ Serial.println(" | Alcohol: Detected!");
+ digitalWrite(LED, HIGH);
+ digitalWrite(motor,1);
+ tone(Buzzer, 1500);
+ delay(120000);
+ }
+ 
+ delay(2000);
+ }
